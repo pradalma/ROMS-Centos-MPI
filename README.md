@@ -16,13 +16,18 @@ Basic Steps
         NetCDF library, with Fortran 90 interface
         Message Passing Interface (MPI) library to run in parallel on a distributed-memory system
 
-    Use a Subversion client to checkout the latest version of the ROMS trunk. It is highly recommended that you checkout the code on the same system that you will be compiling and running the code on to avoid file format issues.
+    Use a Subversion client to checkout the latest version of the ROMS trunk. 
+    It is highly recommended that you checkout the code on the same system that you will be 
+    compiling and running the code on to avoid file format issues.
 
     We recommend that you use the included build script to compile and link ROMS. 
-    This will set up your build environment and execute the make command to build the default ROMS upwelling application. 
-    This process allows you to avoid editing the makefile. Please visit the build script page for more detailed instructions.
-        You can also type make at the top of the directory structure where the makefile is located but we do not recommend 
-        this process because it requires changing the ROMS files which can cause conflicts when you update you ROMS code.
+    This will set up your build environment and execute the make command to build the 
+    default ROMS upwelling application. 
+    This process allows you to avoid editing the makefile.
+    Please visit the build script page for more detailed instructions.
+        You can also type make at the top of the directory structure where the makefile is 
+        located but we do not recommend this process because it requires 
+        changing the ROMS files which can cause conflicts when you update you ROMS code.
 
 
 NoteNote: To speed compilation, you may want to add the -j <n> flag to the build command (i.e. build.sh -j 4) where <n> is the number of processors you wish to compile with. Even single processor machines can benef
