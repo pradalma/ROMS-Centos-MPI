@@ -5,9 +5,13 @@ https://github.com/pradalma/ROMS-Centos-MPI.git
 
 Basic Steps
 
-    Register at the ROMS website (www.myroms.org) to get access to the algorithms and other user privileges. Select a username and password which will be used in the future to login and post messages on the ROMS forum, algorithm downloads, and contributing to wikiROMS.
+    Register at the ROMS website (www.myroms.org) to get access to the 
+    algorithms and other user privileges. Select a username and password 
+    which will be used in the future to login and post messages on the 
+    ROMS forum, algorithm downloads, and contributing to wikiROMS.
 
-    Make sure that you have the following required software in your computer before attempting to compile and run an application:
+    Make sure that you have the following required software in your 
+    computer before attempting to compile and run an application:
         Subversion client to download source
         Fortran 90 or Fortran 95 compiler
         cpp program for C-preprocessing ROMS source code.
