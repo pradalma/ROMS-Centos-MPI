@@ -34,11 +34,16 @@ Basic Steps
         changing the ROMS files which can cause conflicts when you update you ROMS code.
 
 
-NoteNote: To speed compilation, you may want to add the -j <n> flag to the build command (i.e. build.sh -j 4) where <n> is the number of processors you wish to compile with. Even single processor machines can benef
+NoteNote: To speed compilation, you may want to add the -j <n> flag to the build command 
+(i.e. build.sh -j 4) where <n> is the number of processors you wish to compile with.
+Even single processor machines can benef
 it from the -j flag with <n> = 2.
 
 
-NoteNote: To make sure your application can compile successfully, you might want to set USE_DEBUG to on in the build script since it will compile faster. Once your application can compile you can unset USE_DEBUG in order to create an optimized executable. Please visit the build script page for more information
+NoteNote: To make sure your application can compile successfully, you might want 
+to set USE_DEBUG to on in the build script since it will compile faster. Once 
+your application can compile you can unset USE_DEBUG in order to create an optimized 
+executable. Please visit the build script page for more information
 
      To run ROMS in serial, just type:
     oceanS < ROMS/External/ocean_upwelling.in > & log &
@@ -47,9 +52,11 @@ NoteNote: To make sure your application can compile successfully, you might want
     or to run in parrallel (shared-memory) on two processors:
     setenv OMP_NUM_THREAD 2
     oceanO < ROMS/External/ocean_upwelling.in > & log &
-    Here, the the file ROMS/External/ocean_upwelling.in contains all the input parameters to required by this application. Visit ocean.in for more information.
+    Here, the the file ROMS/External/ocean_upwelling.in contains all the input 
+    parameters to required by this application. Visit ocean.in for more information.
 
-NoteNotice that in distributed-memory, the leading < is omitted so all parallel threads can read and process this input script without any communications in between. 
+NoteNotice that in distributed-memory, the leading < is omitted so all parallel 
+threads can read and process this input script without any communications in between. 
 
 
 
