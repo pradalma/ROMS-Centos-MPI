@@ -1,6 +1,9 @@
 Build Script - build.sh, build.bash
 
-As mentioned in makefile, you need to provide settings for some user-defined choices before you can compile ROMS. If you have more than one application (or more than one compiler), you may get tired of editing the makefile. One option is to have a makefile for each configuration. The recommended solution, however, is to used the ROMS build script.
+As mentioned in makefile, you need to provide settings for some user-defined choices before you can compile ROMS. 
+If you have more than one application (or more than one compiler), you may get tired of editing the makefile. 
+One option is to have a makefile for each configuration. The recommended solution, however, is to used the ROMS
+build script.
 
 
 Contents
@@ -13,7 +16,12 @@ Contents
 
 Introduction
 
-There are two of these build scripts in the ROMS/Bin directory: build.sh (which is surprisingly a csh script) and build.bash. The build scripts use environment variables to provide values for the user-defined make variables, overwriting those found in the ROMS makefile. Just as in the multiple makefile option, you will need as many copies of the build script as you have applications. However, the scope of these variables is local to the build script, allowing you to compile different applications at the same time from the same sources as long as each $(SCRATCH_DIR) is unique.
+There are two of these build scripts in the ROMS/Bin directory: build.sh (which is surprisingly a csh script) 
+and build.bash. The build scripts use environment variables to provide values for the user-defined make variables,
+overwriting those found in the ROMS makefile. Just as in the multiple makefile option, you will need as many copies 
+of the build script as you have applications. However, the scope of these variables is local to the build script,
+allowing you to compile different applications at the same time from the same sources as long as each $(SCRATCH_DIR)
+is unique.
 
     Usage:
 
@@ -32,37 +40,57 @@ There are two of these build scripts in the ROMS/Bin directory: build.sh (which 
 
 User Definable Compilation Options
 
-ROMS has a growing list of choices the user must make about the compilation before starting the compile process. These user-defined variables can be set in the build script. Since we use gnu make, it is possible to set the value of these variables in the Unix environment, rather than inside the Makefile (see gmake). The user-definable variables understood by the ROMS makefile are:
+ROMS has a growing list of choices the user must make about the compilation before starting the compile process.
+These user-defined variables can be set in the build script. Since we use gnu make, it is possible to set the 
+value of these variables in the Unix environment, rather than inside the Makefile (see gmake). The user-definable
+variables understood by the ROMS makefile are:
 
 
 ROMS_APPLICATION
-    CPP option defining a particular application (for example, UPWELLING). The makefile will include its associated header file which is located in either the ROMS/Include directory or the path specified in the MY_HEADER_DIR definition. The header file name is the lowercase value of ROMS_APPLICATION with the .h extension (for example, upwelling.h). Recall the CPP option defining an application must be unique.
+    CPP option defining a particular application (for example, UPWELLING). The makefile will include its
+    associated header file which is located in either the ROMS/Include directory or the path specified in 
+    the MY_HEADER_DIR definition. The header file name is the lowercase value of ROMS_APPLICATION with the 
+    .h extension (for example, upwelling.h). Recall the CPP option defining an application must be unique.
 
 
 MY_ROOT_DIR
-    This path is internal to the build script and has no equivalent in the makefile. It can be used to set the base path to your ROMS source code and/or your application input and output files. This variable is not strictly necessary but can make setting the necessary paths easier.
+    This path is internal to the build script and has no equivalent in the makefile. It can be used to set 
+    the base path to your ROMS source code and/or your application input and output files. This variable 
+    is not strictly necessary but can make setting the necessary paths easier.
 
 
 MY_PROJECT_DIR
-    This path is internal to the build script and has no equivalent in the makefile. MY_PROJECT_DIR is most often used to set the paths: MY_HEADER_DIR, MY_ANALYTICAL_DIR, and BINDIR and to set the base path to SCRATCH_DIR. This can be seen near the bottom of the build script.
+    This path is internal to the build script and has no equivalent in the makefile. MY_PROJECT_DIR is most 
+    often used to set the paths: MY_HEADER_DIR, MY_ANALYTICAL_DIR, and BINDIR and to set the base path to 
+    SCRATCH_DIR. This can be seen near the bottom of the build script.
 
 
 MY_ROMS_SRC
-    This path is internal to the build script and has no equivalent in the makefile. It is the location of your ROMS source code and is necessary for the build script to work properly.
+    This path is internal to the build script and has no equivalent in the makefile. It is the location of 
+    your ROMS source code and is necessary for the build script to work properly.
 
 
 COMPILERS
-    Directory where make can find your system/compiler specific mk include files as described in FORT. In some situations you will need to edit the appropriate mk file in the Compilers directory (i.e. Compilers/Linux-gfortran.mk). Rather than editing the mk files released with ROMS and possibly creating conflicts during updates, we suggest that you copy the appropriate system specific mk file and the Compilers/make_macros.mk to another folder and set COMPILERS to that folder.
+    Directory where make can find your system/compiler specific mk include files as described in FORT. In some 
+    situations you will need to edit the appropriate mk file in the Compilers directory 
+    (i.e. Compilers/Linux-gfortran.mk). Rather than editing the mk files released with ROMS and possibly 
+    creating conflicts during updates, we suggest that you copy the appropriate system specific mk file 
+    and the Compilers/make_macros.mk to another folder and set COMPILERS to that folder.
 
 
 MY_CPP_FLAGS
-    Additional CPP options to activate. Sometimes it is desirable to activate one or more CPP options to run different variants of the same application without modifying its header file. If this is the case, specify such options here using the -D syntax. Notice that you need to use your shell's quoting syntax to enclose the definitions. For example:
+    Additional CPP options to activate. Sometimes it is desirable to activate one or more CPP options to
+    run different variants of the same application without modifying its header file. If this is the case, 
+    specify such options here using the -D syntax. Notice that you need to use your shell's quoting syntax 
+    to enclose the definitions. For example:
     setenv MY_CPP_FLAGS "-DAVERAGES"
     setenv MY_CPP_FLAGS "${MY_CPP_FLAGS} -DANA_INITIAL"
-    can be use to write time-averaged fields and use analytical initial conditions. Notice that you can have as many definitions as you want by appending values.
+    can be use to write time-averaged fields and use analytical initial conditions. Notice that you can have
+    as many definitions as you want by appending values.
 
 
-WarningWarning: Be sure to leave environment variables meant to be off set to an empty string or commented out. Any string value (including off) will evaluate to TRUE in conditional if-statements.
+WarningWarning: Be sure to leave environment variables meant to be off set to an empty string or commented out.
+Any string value (including off) will evaluate to TRUE in conditional if-statements.
 
 
 USE_MPI
@@ -70,19 +98,29 @@ USE_MPI
 
 
 USE_MPIF90
-    If USE_MPI is activated, use this to turn on compilation via the script mpif90. This is needed in most Linux operating systems. In some systems with native MPI libraries the compilation does not require MPICH type scripts. This macro is also convenient when there are several Fortran compiliers (ifort, pgf90, pathf90) in the system that use mpif90. In this case, the user needs to select the desired compiler via the FORT variable and turn on both USE_MPI and USE_MPIF90 macros.
+    If USE_MPI is activated, use this to turn on compilation via the script mpif90. This is needed in most 
+    Linux operating systems. In some systems with native MPI libraries the compilation does not require MPICH 
+    type scripts. This macro is also convenient when there are several Fortran compiliers (ifort, pgf90, pathf90) 
+    in the system that use mpif90. In this case, the user needs to select the desired compiler via the FORT
+    variable and turn on both USE_MPI and USE_MPIF90 macros.
 
 
 which_MPI
-    If USE_MPI and USE_MPIF90 are activated, this macro is used to determine which mpif90 to compile with. This macro is convenient when there are several Fortran compiliers (ifort, pgf90, etc.) in the system that use mpif90. The choice of which mpif90 to use will be determined by the combination of this macro and the FORT macro.
+    If USE_MPI and USE_MPIF90 are activated, this macro is used to determine which mpif90 to compile with. 
+    This macro is convenient when there are several Fortran compiliers (ifort, pgf90, etc.) in the system 
+    that use mpif90. The choice of which mpif90 to use will be determined by the combination of this macro 
+    and the FORT macro.
 
 
 USE_OpenMP
-    Compile your application using OpenMP librairies and compiler options. Note: you cannot set USE_OpenMP and USE_MPI at the same time.
+    Compile your application using OpenMP librairies and compiler options. Note: you cannot set USE_OpenMP
+    and USE_MPI at the same time.
 
 
 FORT
-    The ROMS make system will include a file with all the settings that depend on the system and the compiler. The name of this file is determined from the output of the uname command and the value of FORT (i.e. Linux-ifort.mk). Set your compiler here from the following list:
+    The ROMS make system will include a file with all the settings that depend on the system and the compiler.
+    The name of this file is determined from the output of the uname command and the value of FORT
+    (i.e. Linux-ifort.mk). Set your compiler here from the following list:
 
           Operating System        Compiler(s)
 
@@ -110,10 +148,13 @@ USE_LARGE
 
 
 USE_NETCDF4
-    If applicable, link with NetCDF-4 library. Notice that the NetCDF-4 library needs both the HDF5 and, if you want to enable parallel I/O, MPI libraries. In order to write the output files in NetCDF-4/HDF5 format, you will need to set the HDF5 CPP Option.
+    If applicable, link with NetCDF-4 library. Notice that the NetCDF-4 library needs both the HDF5
+    and, if you want to enable parallel I/O, MPI libraries. In order to write the output files in 
+    NetCDF-4/HDF5 format, you will need to set the HDF5 CPP Option.
 
 USE_PARALLEL_IO
-    Activate parallel I/O using parallel enabled NetCDF-4/HDF5 libraries. You will also need to set the HDF5 and PARALLEL_IO CPP Options to enable parallel I/O.
+    Activate parallel I/O using parallel enabled NetCDF-4/HDF5 libraries. You will also need to set 
+    the HDF5 and PARALLEL_IO CPP Options to enable parallel I/O.
 
 
 USE_MY_LIBS
@@ -121,11 +162,22 @@ USE_MY_LIBS
 
 
 MY_HEADER_DIR
-    This is the Directory where your application's header file is located. Recall that a ROMS header file contains all the CPP options defining a particular application. This is the header file that is included in cppdefs.h. Notice that if the header file is located in the ROMS/Include directory, it is possible to include the same header file name located somewhere else because the full directory path is specified here. The user may copy the distributed header file(s) into a different directory and modify it to explore different CPP options.
+    This is the Directory where your application's header file is located. Recall that a ROMS header 
+    file contains all the CPP options defining a particular application. This is the header file that 
+    is included in cppdefs.h. Notice that if the header file is located in the ROMS/Include directory,
+    it is possible to include the same header file name located somewhere else because the full directory
+    path is specified here. The user may copy the distributed header file(s) into a different directory
+    and modify it to explore different CPP options.
 
 
 MY_ANALYTICAL_DIR
-    This is the directory containing the user's analytic files, if any. Templates of the analytic expressions are provided in the User/Functionals directory. If analytic expressions are activated, the makefile will first load the ones located in MY_ANALYTICAL_DIR and then the ones located in ROMS/Functionals. We recommended that you do not modify the analytical expressions in the ROMS/Functionals directory since these are the official versions of these files and updates will conflict with your changes. The user however can modify those in User/Functionals or some other directory and specify which directory with this variable.
+    This is the directory containing the user's analytic files, if any. Templates of the analytic 
+    expressions are provided in the User/Functionals directory. If analytic expressions are activated, 
+    the makefile will first load the ones located in MY_ANALYTICAL_DIR and then the ones located in 
+    ROMS/Functionals. We recommended that you do not modify the analytical expressions in the ROMS/Functionals 
+    directory since these are the official versions of these files and updates will conflict with your changes.
+    The user however can modify those in User/Functionals or some other directory and specify which directory 
+    with this variable.
 
 
 BINDIR
@@ -137,7 +189,9 @@ SCRATCH_DIR
 
 Library and Executable Paths
 
-There is a section (the one from build.sh is shown below) in the the build scripts to make it easier to switch between different compilers and MPI implementations. This will only apply to MPI implementations that use the mpif90 wrapper script (MPICH, MPICH2, OpenMPI, etc.).
+There is a section (the one from build.sh is shown below) in the the build scripts to make it easier to 
+switch between different compilers and MPI implementations. This will only apply to MPI implementations
+that use the mpif90 wrapper script (MPICH, MPICH2, OpenMPI, etc.).
 
     if ($?USE_MPIF90) then
       switch ($FORT)
@@ -175,15 +229,27 @@ There is a section (the one from build.sh is shown below) in the the build scrip
       endsw
     endif
 
-NoteKeep in mind that you need to adjust the paths to you MPI implementations for your particular system. You must also set USE_MPIF90 to on.
+NoteKeep in mind that you need to adjust the paths to you MPI implementations for your particular system. 
+You must also set USE_MPIF90 to on.
 
-The path of the libraries required by ROMS can be set using environment variables which take precedence over the values specified in the makefile macro definitions file (Compilers/*.mk). If so desired, uncomment the local USE_MY_LIBS definition above and edit the paths to suit your system. For most applications, only the location of the NetCDF library (NETCDF_LIBDIR) and include directory (NETCDF_INCDIR) are needed.
+The path of the libraries required by ROMS can be set using environment variables which take precedence 
+over the values specified in the makefile macro definitions file (Compilers/*.mk). If so desired, uncomment
+the local USE_MY_LIBS definition above and edit the paths to suit your system. For most applications, only 
+the location of the NetCDF library (NETCDF_LIBDIR) and include directory (NETCDF_INCDIR) are needed.
 
-Notice that when the USE_NETCDF4 macro is activated, we need the serial or parallel version of the NetCDF-4/HDF5 library. The configuration script NC_CONFIG (available since NetCDF 4.0.1) is used to set up all the required libraries according to the installed options (OPeNDAP, NetCDF4/HDF5 file format). The parallel library uses the MPI-I/O layer (usually available in MPICH2 and OpenMPI) requiring compiling with the selected MPI library.
+Notice that when the USE_NETCDF4 macro is activated, we need the serial or parallel version of the 
+NetCDF-4/HDF5 library. The configuration script NC_CONFIG (available since NetCDF 4.0.1) is used to
+set up all the required libraries according to the installed options (OPeNDAP, NetCDF4/HDF5 file format). 
+The parallel library uses the MPI-I/O layer (usually available in MPICH2 and OpenMPI) requiring compiling 
+with the selected MPI library.
 
-In ROMS distributed-memory applications, you may use either the serial or parallel version of the NetCDF-4/HDF5 library. The parallel version is required when parallel I/O is activated (ROMS cpp option PARALLEL_IO and HDF5).
+In ROMS distributed-memory applications, you may use either the serial or parallel version of the
+NetCDF-4/HDF5 library. The parallel version is required when parallel I/O is activated (ROMS cpp option 
+PARALLEL_IO and HDF5).
 
-However, in serial or shared-memory ROMS applications, we need to use the serial version of the NetCDF-4/HDF5 to avoid conflicts with the compiler. We cannot activate MPI constructs in serial or shared-memory ROMS code. Hybrid parallelism is not possible.
+However, in serial or shared-memory ROMS applications, we need to use the serial version of the
+NetCDF-4/HDF5 to avoid conflicts with the compiler. We cannot activate MPI constructs in serial or
+shared-memory ROMS code. Hybrid parallelism is not possible.
 
 
 Below is an except from the custom library section.
@@ -248,9 +314,23 @@ Below is an except from the custom library section.
 
 Notes and Recommendations
 
-The new structure of ROMS (version 3.0 or higher) allows user specific CPP definitions and analytical options to be set in a small number of separate standalone header files. Therefore, users no longer have to modify small blocks of code within huge files as was necessary in previous versions (cppdefs.h and analytical.F). This makes it easy to distribute the configuration for a specific application via a small number of source code related files plus the inputs (grid, initial conditions, and forcing NetCDF files), while allowing users of the application to keep current with central code improvements via svn. This also takes care of all licensing issues. You are free to include your own statement of your contributions in the files you distribute. The license and copyright statements by the ROMS developer group remain in the source code distributed at www.myroms.org.
+The new structure of ROMS (version 3.0 or higher) allows user specific CPP definitions and analytical 
+options to be set in a small number of separate standalone header files. Therefore, users no longer 
+have to modify small blocks of code within huge files as was necessary in previous versions (cppdefs.h 
+and analytical.F). This makes it easy to distribute the configuration for a specific application via a 
+small number of source code related files plus the inputs (grid, initial conditions, and forcing NetCDF 
+files), while allowing users of the application to keep current with central code improvements via svn. 
+This also takes care of all licensing issues. You are free to include your own statement of your 
+contributions in the files you distribute. The license and copyright statements by the ROMS developer 
+group remain in the source code distributed at www.myroms.org.
 
-We recommend that users work with a local source code that is regularly updated with the official version at the ROMS svn repository using svn update. This will allow bug fixes and new code developments to be pushed out to users and minimize the risk of a user unwittingly working with code with known flaws. The user can download any of these set-ups from the test svn repository. Note that these applications do not include the source code since the user can checkout the latest version of ROMS from the svn repository. The recommended priactice is to create a Projects root directory containing all applications. For example, the WC13 root directory for the data assimilation tutorial has the following strcuture:
+We recommend that users work with a local source code that is regularly updated with the official 
+version at the ROMS svn repository using svn update. This will allow bug fixes and new code developments 
+to be pushed out to users and minimize the risk of a user unwittingly working with code with known flaws.
+The user can download any of these set-ups from the test svn repository. Note that these applications 
+do not include the source code since the user can checkout the latest version of ROMS from the svn repository.
+The recommended priactice is to create a Projects root directory containing all applications. For example, 
+the WC13 root directory for the data assimilation tutorial has the following strcuture:
 
  /WC13                     Root directory for the California System 4D-Var applications
       /ARRAYS_MODES        Stabilized representer matrix array modes and clipping
@@ -279,36 +359,11 @@ If you check the I4DVAR sub-directory, you will find the following files:
               /s4dvar.in           4D-Var standard input script template
               /wc13.h              WC13 header with CPP options
 
-Notice that there is a local copy of the header file wc13.h containing the CPP options to use in this application. We highly recommend that the user have a local copy of the header file instead of editing the distributed files in the ROMS/Include directory. During the compilation build.sh will direct make to use the appropriate one.
+Notice that there is a local copy of the header file wc13.h containing the CPP options to use in this 
+application. We highly recommend that the user have a local copy of the header file instead of editing
+the distributed files in the ROMS/Include directory. During the compilation build.sh will direct make 
+to use the appropriate one.
 Navigation menu
 
-    Page Discussion View source History 
 
-    Log in 
-
-Navigation
-
-    Home
-    Getting Started
-    Input/Output
-    Tools
-    Test Cases
-    Applications
-    Adjoint Algorithms
-
-Help
-
-    Page Formatting
-    FAQ
-
-Search
- 
-Tools
-
-    What links here
-    Related changes
-    Special pages
-    Printable version
-    Permanent link
-    Page information
 
