@@ -1,0 +1,11 @@
+FROM http://madiris.altervista.org/?p=248, with edits.
+
+Install subversion
+sudo apt-get install subversion
+Install make
+sudo apt-get install make
+Install netcdf
+sudo apt-get update
+sudo apt-get install libnetcdf-dev netcdf-bin
+Install compilers:
+sudo apt-get install cpp g++ gfortran
