@@ -1,0 +1,8 @@
+https://seanthegeek.net/234/graphical-linux-applications-bash-ubuntu-windows/
+
+
+Install vcXsrv
+
+create shortcut to vcXsrv and paste into the startup directory (windows key+R, type shell:startup, paste)
+
+save export DISPLAY=localhost:0.0 to bashrc file
